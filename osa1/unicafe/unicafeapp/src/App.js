@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+const StatisticLine = ({text, value}) => (<tbody><tr><td>{text}</td><td>{value}</td></tr></tbody>)
+
+
+
+
 const Statistic = ({good, neutral, bad, all}) => {
   if(all === 0) {
     return(
@@ -10,33 +15,24 @@ const Statistic = ({good, neutral, bad, all}) => {
     )
   }
   return(
-    <div>
-      <h1>statistic</h1>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {all}</div>
-      <div>average {(good-bad)/all}</div>
-      <div>positive {(good/all)*100} %</div>
-      </div>
-
-  )
-}
-const Buttons = ({plusgood, plusbad, plusneutral}) => {
-  return(
-    <div>
-    <button onClick={plusgood}>
-        good
-      </button>
-      <button onClick={plusneutral}>
-        neutral
-      </button>
-      <button onClick={plusbad}>
-        bad
-      </button>
+    <div><h1>statistic</h1>
+    <table>
+      <StatisticLine text="good" value ={good} />
+      <StatisticLine text="neutral" value ={neutral} />
+      <StatisticLine text="bad" value ={bad} />
+      <StatisticLine text="all" value ={all} />
+      <StatisticLine text="average" value ={(good-bad)/all} />
+      <StatisticLine text="positive" value ={(good/all)*100 + " %"} />
+    </table>
     </div>
   )
 }
+const Button = ({ click, name }) => (
+  <button onClick={click}>
+    {name}
+  </button>
+)
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -51,7 +47,9 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <Buttons plusgood={plusgood} plusbad={plusbad} plusneutral={plusneutral}/>
+      <Button click={plusgood} name='good'/> 
+      <Button click={plusneutral} name='neutral'/> 
+      <Button click={plusbad} name='bad'/> 
       <Statistic good={good} neutral={neutral} bad={bad} all={all}/>
     </div>
   )
