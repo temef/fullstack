@@ -3,6 +3,7 @@ import axios from 'axios'
 import Person from './components/Person'
 import AddNew from './components/addNew'
 import Filter from './components/filter'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -25,9 +26,11 @@ const addName = (event) => {
   const personObject = {name: newName, number: newNumber}
   if(persons.some(element => element['name'] === newName)) alert(`${newName} is already added to phonebook`)
   else {
-  setPersons(persons.concat(personObject))
-  setNewName('')
-  setNewNumber('')
+    personService.add(personObject).then(person => {
+      setPersons(persons.concat(person))
+      setNewName('')
+      setNewNumber('')
+    })
   }
 }
 
@@ -67,7 +70,10 @@ const handleChange3 = (event) => {
 
       <h2>Numbers</h2>
 
-      <Person persons={persons.filter(element => element['name'].includes(newFilter))}/>
+      <Person 
+        persons={persons.filter(element => element['name'].includes(newFilter))}
+        setPersons={setPersons}
+      />
       
     </div>
   )
