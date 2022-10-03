@@ -1,4 +1,4 @@
-import personService from '/Users/teemuromo/fullstack/osa2/puhelinluettelo2.6/src/services/persons.js'
+import personService from '../services/persons'
 
 const Person = ({ persons, setPersons }) => {
     return (

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useState } from 'react'
 
 const baseUrl = 'http://localhost:3001/persons'
 
@@ -15,9 +14,11 @@ const deleteName = (object) => {
     }
   }
 
-  const getAll = () => {
-    const request = axios.get(baseUrl)
+  const changeNumber = (object) => {
+    const request = axios.put(`${baseUrl}/${object.id}`, object)
     return request.then(response => response.data)
   }
 
-export default { add, deleteName, getAll }
+const exportObject = { add, deleteName, changeNumber, }
+
+export default exportObject
