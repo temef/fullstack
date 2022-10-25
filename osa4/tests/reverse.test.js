@@ -117,3 +117,5 @@ describe('most blogs on same author and most likes with same author', () => {
 })
 
 listHelper.mostLikes(listWithManyBlogs)
+
+module.exports = { listWithManyBlogs }

@@ -37,7 +37,7 @@ const mostLikes = (blogs) => {
     const values = {}
     const arr = []
     blogs.forEach((x) => {values[x.author] = {likes: values[x.author] ? values[x.author].likes + x.likes : x.likes }})
-    console.log(values)
+    // console.log(values)
 
     for(const value in values) {
         arr.push( { author:value, ...values[value]} )
