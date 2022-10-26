@@ -3,26 +3,16 @@ const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
 const reverse = require('./reverse.test')
+const helper = require('./test_helper')
 
 const initialBlogs = reverse.listWithManyBlogs
 
 const api = supertest(app)
-
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(initialBlogs[0])
-  await blogObject.save()
-  blogObject = new Blog(initialBlogs[1])
-  await blogObject.save()
-  blogObject = new Blog(initialBlogs[2])
-  await blogObject.save()
-  blogObject = new Blog(initialBlogs[3])
-  await blogObject.save()
-  blogObject = new Blog(initialBlogs[4])
-  await blogObject.save()
-  blogObject = new Blog(initialBlogs[5])
-  await blogObject.save()
+  await Blog.insertMany(initialBlogs)
 })
+
 
 test('blogs are returned as json', async () => {
   await api
@@ -36,6 +26,28 @@ test('all blogs are returned', async () => {
   expect(response.body).toHaveLength(initialBlogs.length)
 })
 
+test('a valid blog can be added', async () => {
+  const newBlog = {
+    title: "valid",
+    author: "validator",
+    url: "validator.com",
+    likes: 0
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
+  
+    const contents = blogsAtEnd.map(blog => blog.title)
+    expect(contents).toContain(
+      'valid'
+    )
+})
 
   test('check that every blog has id', async () => {
     const response = await api.get('/api/blogs')
@@ -59,14 +71,35 @@ test('test adding blogs to /api/blogs', async () => {
     likes: 7
   }
   await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
-  const response = await api.get('/api/blogs')
-  const contents = response.body.map(blog => blog.title)
-
-  expect(response.body).toHaveLength(initialBlogs.length + 1)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
+  const contents = blogsAtEnd.map(blog => blog.title)
   expect(contents).toContain('testi')
 })
 
+test('adding blog without likes automatically puts likes to 0', async () => {
+  const newBlog = {
+    title: "withoutlikes",
+    author: "testi",
+    url: "www.testi.com",
+  }
+  await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
 
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
+  const check = blogsAtEnd.filter(blog => blog.likes === 0)
+  expect(check.map(blog => blog.title)).toContain('withoutlikes')
+
+})
+
+test('adding blog without title and url should give bad request error 400', async () => {
+  const newBlog = {
+    author: "testi",
+  }
+  await api.post('/api/blogs').send(newBlog).expect(400)
+
+})
 
 afterAll(() => {
   mongoose.connection.close()
