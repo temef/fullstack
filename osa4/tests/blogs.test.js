@@ -3,23 +3,24 @@ const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
 const reverse = require('./reverse.test')
-const initialBlog = reverse.listWithManyBlogs
+
+const initialBlogs = reverse.listWithManyBlogs
 
 const api = supertest(app)
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(initialBlog[0])
+  let blogObject = new Blog(initialBlogs[0])
   await blogObject.save()
-  blogObject = new Blog(initialBlog[1])
+  blogObject = new Blog(initialBlogs[1])
   await blogObject.save()
-  blogObject = new Blog(initialBlog[2])
+  blogObject = new Blog(initialBlogs[2])
   await blogObject.save()
-  blogObject = new Blog(initialBlog[3])
+  blogObject = new Blog(initialBlogs[3])
   await blogObject.save()
-  blogObject = new Blog(initialBlog[4])
+  blogObject = new Blog(initialBlogs[4])
   await blogObject.save()
-  blogObject = new Blog(initialBlog[5])
+  blogObject = new Blog(initialBlogs[5])
   await blogObject.save()
 })
 
@@ -32,7 +33,7 @@ test('blogs are returned as json', async () => {
 
 test('all blogs are returned', async () => {
   const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(initialBlog.length)
+  expect(response.body).toHaveLength(initialBlogs.length)
 })
 
 
@@ -41,15 +42,29 @@ test('all blogs are returned', async () => {
 
     const contents = response.body.map(id => id.id)
     // console.log(contents)
-    expect(contents).toHaveLength(initialBlog.length)
+    expect(contents).toHaveLength(initialBlogs.length)
   })
 
   test('check that random blog has identifier named id', async () => {
     const response = await api.get('/api/blogs')
-    console.log(response.body[Math.floor(Math.random() * initialBlog.length - 1)])
-    expect(response.body[Math.floor(Math.random() * initialBlog.length - 1)])
+    console.log(response.body[Math.floor(Math.random() * initialBlogs.length - 1)])
+    expect(response.body[Math.floor(Math.random() * initialBlogs.length - 1)])
   })
 
+test('test adding blogs to /api/blogs', async () => {
+  const newBlog = {
+    title: "testi",
+    author: "testi",
+    url: "www.testi.com",
+    likes: 7
+  }
+  await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
+  const response = await api.get('/api/blogs')
+  const contents = response.body.map(blog => blog.title)
+
+  expect(response.body).toHaveLength(initialBlogs.length + 1)
+  expect(contents).toContain('testi')
+})
 
 
 
