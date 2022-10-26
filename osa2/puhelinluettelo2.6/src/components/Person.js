@@ -1,12 +1,19 @@
-import personService from '/Users/teemuromo/fullstack/osa2/puhelinluettelo2.6/src/services/persons.js'
+import personService from '../services/persons'
 
-const Person = ({ persons, setPersons }) => {
+const Person = ({ persons, setPersons, setMessage }) => {
     return (
         <>
             {persons.map(person =>
-            <div key={person.name}>
+            <div key={person.name} className='person'>
             <b> {person.name} {person.number} <button onClick={() => 
-                {if(personService.deleteName(person)) {setPersons((persons) => persons.filter((p) => p.name !== person.name))}}
+                {if(personService.deleteName(person)) {
+                    setPersons((persons) => persons.filter((p) => p.name !== person.name))
+                    setMessage(`Deleted ${person.name}`)
+                    setTimeout(() => {
+                        setMessage(null)
+                      }, 3000)
+                }
+             }
                 }>Delete</button> </b>
             </div>
             )}
