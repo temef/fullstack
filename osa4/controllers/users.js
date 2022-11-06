@@ -12,6 +12,18 @@ usersRouter.post('/', async (request, response) => {
     })
   }
   
+  if(username && username.length < 3) {
+    return response.status(400).json({
+      error: "Username min length is 3"
+    })
+  }
+
+  if(password && password.length < 3) {
+    return response.status(400).json({
+      error: "Password min length is 3"
+    })
+  }
+
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
 
