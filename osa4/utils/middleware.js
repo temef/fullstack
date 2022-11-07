@@ -32,8 +32,12 @@ const tokenExtractor = (request, response, next) => {
 const userExtractor = async (request, response, next) => {
   const token = request.token
   if (token) {
+    try {
   const decodedToken = jwt.verify(token, process.env.SECRET)
   request.user = await User.findById(decodedToken.id)
+    } catch(exception) {
+      next(exception)
+    }
   }
   next()
 }

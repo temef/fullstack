@@ -76,44 +76,42 @@ test('a valid blog can be added', async () => {
     expect(response.body[Math.floor(Math.random() * initialBlogs.length - 1)])
   })
 
-// test('test adding blogs to /api/blogs', async () => {
-//   const newBlog = {
-//     title: "testi",
-//     author: "testi",
-//     url: "www.testi.com",
-//     likes: 7
-//   }
-//   await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
+
+
+test('adding blog without likes automatically puts likes to 0', async () => {
+  const newBlog = {
+    title: "withoutlikes",
+    author: "testi",
+    url: "www.testi.com",
+  }
+
+  await api
+    .post("/api/login")
+    .send({ username: "sudo", password: "sekret"})
+    .then((res) => {
+      return (token = res.body.token)
+  })
+
+  await api.post("/api/blogs")
+    .set("Authorization", `bearer ${token}`)
+    .send(newBlog)
+    .expect(201).expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
+  const check = blogsAtEnd.filter(blog => blog.likes === 0)
+  expect(check.map(blog => blog.title)).toContain('withoutlikes')
+
+})
+
+test('adding blog without title and url should give bad request error 400', async () => {
   
-//   const blogsAtEnd = await helper.blogsInDb()
-//   expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
-//   const contents = blogsAtEnd.map(blog => blog.title)
-//   expect(contents).toContain('testi')
-// })
+  const newBlog = {
+    author: "testi",
+  }
+  await api.post('/api/blogs').send(newBlog).expect(400)
 
-// test('adding blog without likes automatically puts likes to 0', async () => {
-//   const newBlog = {
-//     title: "withoutlikes",
-//     author: "testi",
-//     url: "www.testi.com",
-//   }
-//   await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
-
-//   const blogsAtEnd = await helper.blogsInDb()
-//   expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
-//   const check = blogsAtEnd.filter(blog => blog.likes === 0)
-//   expect(check.map(blog => blog.title)).toContain('withoutlikes')
-
-// })
-
-// test('adding blog without title and url should give bad request error 400', async () => {
-  
-//   const newBlog = {
-//     author: "testi",
-//   }
-//   await api.post('/api/blogs').send(newBlog).expect(400)
-
-// })
+})
 
 test('deleting blog', async () => {
   
@@ -271,9 +269,6 @@ describe('when there is initially one user at db', () => {
     .set("Authorization", `bearer ${null}`)
     .send(newBlog)
     .expect(401)
-
-      // .expect('Content-Type', /application\/json/)
-      // .expect(result.body.error).toContain('Username min length is 3')
   
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(initialBlogs.length)
