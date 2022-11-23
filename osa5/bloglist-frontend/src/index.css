@@ -1,0 +1,35 @@
+h1 {
+    color:brown;
+    font-style: Arial;
+  }
+
+h2 {
+    color:cadetblue;
+    font-style: Arial;
+}
+
+h3 {
+  color: royalblue;
+  font-style: Arial;
+}
+  
+  .error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .message {
+    color: green;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
