@@ -23,13 +23,13 @@ const Blog = ({ blog, user, addLike, removeBlog }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <div>
         <b>Title:</b> {blog.title} <b> Author:</b> {blog.author}
         <button onClick={toggleView}> {view ? "Hide" : "Show"} </button>
       </div>
       {view && (
-        <div>
+        <div className="showed">
           <p>{blog.url}</p>
           <p>
             <b>Likes:</b> {blog.likes} <button onClick={like}> Like </button>

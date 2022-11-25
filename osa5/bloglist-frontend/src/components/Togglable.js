@@ -2,7 +2,7 @@ import { useState } from "react"
 import React from "react"
 import PropTypes from "prop-types"
 
-const Togglable = React.forwardRef((props) => {
+const Togglable = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
 
   Togglable.propTypes = {
@@ -23,7 +23,7 @@ const Togglable = React.forwardRef((props) => {
   return (
     <div>
       {visible ? (
-        <div>
+        <div className="togglableContent">
           {childrenWithProps}
           <button onClick={toggleVisibility}>cancel</button>
         </div>

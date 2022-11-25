@@ -18,6 +18,7 @@ const BlogForm = ({ createBlog, setVisible }) => {
     setVisible(false)
   }
 
+  // console.log(title, author, url)
   return(
     <form onSubmit={addBlog}>
       <h3>Add a new blog</h3>
@@ -28,6 +29,7 @@ const BlogForm = ({ createBlog, setVisible }) => {
           value={title}
           name="Title"
           onChange={({ target }) => setTitle(target.value)}
+          placeholder='title'
         />
       </div>
       <div>
@@ -37,6 +39,7 @@ const BlogForm = ({ createBlog, setVisible }) => {
           value={author}
           name="Author"
           onChange={({ target }) => setAuthor(target.value)}
+          placeholder='author'
         />
       </div>
       <div>
@@ -46,6 +49,7 @@ const BlogForm = ({ createBlog, setVisible }) => {
           value={url}
           name="Url"
           onChange={({ target }) => setUrl(target.value)}
+          placeholder='url'
         />
       </div>
       <button type="submit">Create</button>

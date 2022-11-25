@@ -54,22 +54,19 @@ const App = () => {
   }
 
   const addBlog = (blogObject) => {
-    try {
-      blogService.create(blogObject).then((returnedBlog) => {
-        setBlogs(blogs.concat(returnedBlog))
-        setMessage(
-          `A new blog: ${returnedBlog.title} by ${returnedBlog.author} added!`
-        )
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
-      })
-    } catch (exception) {
+
+    blogService.create(blogObject).then((returnedBlog) => {
+      setBlogs(blogs.concat(returnedBlog))
+      setMessage(`A new blog: ${returnedBlog.title} by ${returnedBlog.author} added!`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    }).catch( () => {
       setError(`Remember to put Title, Author and Url!`)
       setTimeout(() => {
         setError(null)
       }, 5000)
-    }
+    })
   }
 
   const logout = () => {

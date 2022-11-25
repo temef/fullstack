@@ -15,7 +15,7 @@ blogsRouter.get('/', async (request, response) => {
 
     //console.log(body)
     const user = request.user
-    console.log(user)
+    //console.log(user)
 
     let likes = 0
     if(body.likes) {
@@ -29,9 +29,9 @@ blogsRouter.get('/', async (request, response) => {
       likes: likes,
       user: user.id
     })
-
+    
     if(blog.title && blog.url) {
-
+      
     try{
     const savedBlog = await blog.save()
     //console.log(savedBlog.id)
