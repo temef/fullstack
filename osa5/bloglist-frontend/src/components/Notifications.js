@@ -16,7 +16,7 @@ const Error = ({ error }) => {
   }
 
   return (
-    <div className="error">
+    <div id='error' className="error">
       {error}
     </div>
   )
