@@ -20,4 +20,16 @@ const notificationSlice = createSlice({
 })
 
 export const { createNotification, removeNotification } = notificationSlice.actions
+
+export const setNotification = (content, sec) => {
+    return async dispatch => {
+        const anecdote = content
+        dispatch(createNotification(anecdote))
+        setTimeout(() => {
+            dispatch(removeNotification())
+        }, sec * 1000)
+    }
+}
+
+
 export default notificationSlice.reducer
