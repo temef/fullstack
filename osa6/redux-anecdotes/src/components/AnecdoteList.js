@@ -10,16 +10,14 @@ const Anecdotes = () => {
     anecdotes.content.toLowerCase().includes(filter.text.toLowerCase()))
   
   const vote = (anecdote) => {
-    console.log('vote', anecdote.id)
-    const findRealAnecdote = anecdotes.find(n => n.id === anecdote.id)
-    console.log('löytyykö', findRealAnecdote)
-    dispatch(voteAnecdoteBackEnd(findRealAnecdote))
+    // console.log('vote', anecdote.id)
+    // console.log('löytyykö', findRealAnecdote)
+    dispatch(voteAnecdoteBackEnd(anecdote))
 
     const content = {
       content: anecdotes.find(n => n.id === anecdote.id).content,
       string: "You voted:"
     }
-    
     dispatch(setNotification(content, 5))
   }
 
