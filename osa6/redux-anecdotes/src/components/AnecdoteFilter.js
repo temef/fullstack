@@ -1,12 +1,14 @@
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { filter } from '../reducers/filterReducer'
 
-const Filter = () => {
-    const dispatch = useDispatch()
-    const handleChange = (event) => {
-      // input-kentän arvo muuttujassa event.target.value
-      console.log(event.target.value)
-      dispatch(filter(event.target.value))
+const Filter = (props) => {
+
+    // console.log(props)
+
+    const handleChange = async (event) => {
+      // console.log(event.target.value)
+      const text = event.target.value
+      props.filter(text)
     }
 
 
@@ -20,5 +22,7 @@ const Filter = () => {
       </div>
     )
   }
+
   
-  export default Filter
+  
+  export default connect(null, { filter })(Filter)

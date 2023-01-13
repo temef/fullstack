@@ -13,12 +13,12 @@ const Anecdotes = () => {
     // console.log('vote', anecdote.id)
     // console.log('löytyykö', findRealAnecdote)
     dispatch(voteAnecdoteBackEnd(anecdote))
-
+    
     const content = {
       content: anecdotes.find(n => n.id === anecdote.id).content,
       string: "You voted:"
     }
-    dispatch(setNotification(content, 5))
+    dispatch(setNotification(content, 5, anecdote))
   }
 
   return(

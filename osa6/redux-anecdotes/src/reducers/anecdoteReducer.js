@@ -66,7 +66,7 @@ export const voteAnecdoteBackEnd = (object) => {
       ...object,
       votes: object.votes + 1
       }
-      console.log(asd)
+      // console.log(asd)
       const anecToChange = await anecdoteService.voteAnecdoteService(changeVotes)
       console.log(anecToChange)
     dispatch(voteAnecdote(anecToChange))
