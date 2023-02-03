@@ -1,25 +1,31 @@
-const Notification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
+import { useMessage } from '../hooks/useMessage';
 
-  return (
-    <div className="message">
-      {message}
-    </div>
-  )
-}
+const Notification = ({ message }) => {
+  if (!message) {
+    return null;
+  }
+  return <div className="message">{message}</div>;
+};
 
 const Error = ({ error }) => {
-  if (error === null) {
-    return null
+  if (!error) {
+    return null;
   }
 
   return (
-    <div id='error' className="error">
+    <div id="error" className="error">
       {error}
     </div>
-  )
-}
+  );
+};
 
-export { Notification, Error }
+export const Notifications = () => {
+  const { msg, isError } = useMessage();
+  if (isError) return <Error error={msg} />;
+
+  return (
+    <>
+      <Notification message={msg} />
+    </>
+  );
+};

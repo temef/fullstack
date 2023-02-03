@@ -1,25 +1,25 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const BlogForm = ({ createBlog, setVisible }) => {
-  const [title, setTitle] = useState([])
-  const [author, setAuthor] = useState([])
-  const [url, setUrl] = useState([])
+  const [title, setTitle] = useState([]);
+  const [author, setAuthor] = useState([]);
+  const [url, setUrl] = useState([]);
 
   const addBlog = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     createBlog({
       title: title,
       author: author,
-      url: url
-    })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-    setVisible(false)
-  }
+      url: url,
+    });
+    setTitle('');
+    setAuthor('');
+    setUrl('');
+    setVisible(false);
+  };
 
   // console.log(title, author, url)
-  return(
+  return (
     <form onSubmit={addBlog}>
       <h3>Add a new blog</h3>
       <div>
@@ -29,8 +29,8 @@ const BlogForm = ({ createBlog, setVisible }) => {
           value={title}
           name="Title"
           onChange={({ target }) => setTitle(target.value)}
-          placeholder='title'
-          id='title'
+          placeholder="title"
+          id="title"
         />
       </div>
       <div>
@@ -40,8 +40,8 @@ const BlogForm = ({ createBlog, setVisible }) => {
           value={author}
           name="Author"
           onChange={({ target }) => setAuthor(target.value)}
-          placeholder='author'
-          id='author'
+          placeholder="author"
+          id="author"
         />
       </div>
       <div>
@@ -51,13 +51,13 @@ const BlogForm = ({ createBlog, setVisible }) => {
           value={url}
           name="Url"
           onChange={({ target }) => setUrl(target.value)}
-          placeholder='url'
-          id='url'
+          placeholder="url"
+          id="url"
         />
       </div>
       <button type="submit">Create</button>
     </form>
-  )
-}
+  );
+};
 
-export default BlogForm
+export default BlogForm;

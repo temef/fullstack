@@ -1,24 +1,24 @@
-import { useState } from "react"
-import React from "react"
-import PropTypes from "prop-types"
+import { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Togglable = React.forwardRef((props, ref) => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   Togglable.propTypes = {
     buttonLabel: PropTypes.string.isRequired,
-  }
+  };
 
   const toggleVisibility = () => {
-    setVisible((prev) => !prev)
-  }
+    setVisible((prev) => !prev);
+  };
 
   const childrenWithProps = React.Children.map(props.children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child, { visible, setVisible })
+      return React.cloneElement(child, { visible, setVisible });
     }
-    return child
-  })
+    return child;
+  });
 
   return (
     <div>
@@ -33,7 +33,7 @@ const Togglable = React.forwardRef((props, ref) => {
         </div>
       )}
     </div>
-  )
-})
+  );
+});
 
-export default Togglable
+export default Togglable;

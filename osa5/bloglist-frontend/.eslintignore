@@ -2,3 +2,5 @@ node_modules
 build
 .eslintrc.js
 Togglable.js
+.prettierrc.json
+cypress.config.js
