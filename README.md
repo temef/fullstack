@@ -13,4 +13,4 @@
 
 All the materials and guides are from [Full Stack open](https://fullstackopen.com/en/)
 
-![certificate-fullstack](https://user-images.githubusercontent.com/71660117/222232509-08d1a13c-9658-4e7e-b5a8-5f092ba1eefa.png)
+![certificate-fullstack (1)](https://user-images.githubusercontent.com/71660117/222232961-d5ddfb9a-e6b3-42aa-b875-0b8dcefa4359.png)
