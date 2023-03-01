@@ -12,3 +12,5 @@
 **Participants are expected to have good programming skills, basic knowledge of web programming and databases, and to know the basics of working with the Git version-control system. You are also expected to have perseverance and the ability for independent problem solving and information seeking.**
 
 All the materials and guides are from [Full Stack open](https://fullstackopen.com/en/)
+
+![certificate-fullstack](https://user-images.githubusercontent.com/71660117/222232509-08d1a13c-9658-4e7e-b5a8-5f092ba1eefa.png)
